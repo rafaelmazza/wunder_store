@@ -2,6 +2,11 @@
 
 <ul>
 <% @products.each do |product| %>
-	<li><%= product.name %></li>
+	<li class="product">
+		<%= product.name %>
+		<ul>
+			<li><%= link_to t(:Edit), edit_product_path(product) %></li>
+		</ul>
+	</li>
 <% end %>
 </ul>

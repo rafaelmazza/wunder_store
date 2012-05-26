@@ -13,4 +13,18 @@ describe "Products request" do
     current_path.should == products_path
     page.should have_content("Keyboard")
   end
+  
+  it "edit a product" do
+    product = create(:product)
+    visit products_path
+    # within "ul li.product ul li" do
+      click_on "Edit"
+    # end
+    current_path.should == edit_product_path(product)
+    # page.should have_content(product.name)
+    fill_in "Name", :with => "#{product.name} edited"
+    click_on "Save"
+    current_path.should == products_path
+    page.should have_content("#{product.name} edited")
+  end
 end
