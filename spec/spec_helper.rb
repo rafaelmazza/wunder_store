@@ -41,4 +41,6 @@ RSpec.configure do |config|
   end
   
   config.include FactoryGirl::Syntax::Methods
+  
+  I18n.default_locale = :en
 end
