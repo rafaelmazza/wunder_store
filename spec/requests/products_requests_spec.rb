@@ -7,6 +7,8 @@ describe "Products request" do
     fill_in "Name", :with => "Keyboard"
     fill_in "Description", :with => "A great keyboard."
     fill_in "Price", :with => 19.99
+    # fill_in "product[variants][][name]", :with => "Color"
+    # fill_in "product[variants][][values]", :with => "Black, Blue, Red"
     # fill_in "product_variant1_name", :with => "Color"
     # fill_in "product_variant1_values", :with => "Black, White, Red"
     click_on "Save"
@@ -26,5 +28,13 @@ describe "Products request" do
     click_on "Save"
     current_path.should == products_path
     page.should have_content("#{product.name} edited")
+  end
+  
+  it "show a product" do
+    product = create(:product)
+    visit products_path
+    click_on "View"
+    current_path.should == product_path(product)
+    page.should have_content(product.name)
   end
 end

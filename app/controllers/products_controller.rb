@@ -22,4 +22,8 @@ class ProductsController < ApplicationController
     @product.update_attributes(params[:product])
     redirect_to products_path
   end
+  
+  def show
+    @product = Product.find(params[:id])
+  end
 end

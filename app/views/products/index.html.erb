@@ -5,7 +5,8 @@
 	<li class="product">
 		<%= product.name %>
 		<ul>
-			<li><%= link_to t(:Edit), edit_product_path(product) %></li>
+			<li><%= link_to t(:edit), edit_product_path(product) %></li>
+			<li><%= link_to t(:view), product_path(product) %></li>
 		</ul>
 	</li>
 <% end %>
