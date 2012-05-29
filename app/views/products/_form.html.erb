@@ -11,6 +11,14 @@
 		<%= f.label :price %>
 		<%= f.text_field :price %>
 	</p>
+	<!--
+  <%= f.fields_for :variants do |variants_form| %>
+    <p>
+      <%= variants_form.label :price %>
+      <%= variants_form.text_field :price %>
+    </p>
+  <% end %>
+  -->
 	<p>
 		<%= f.submit 'Save' %>
 	</p>
