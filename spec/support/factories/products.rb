@@ -4,6 +4,6 @@ FactoryGirl.define do
   factory :product do
     name FactoryGirl.generate(:name)
     description "Amazing product with lot of features"
-    # price 19.99
+    price 19.99
   end
 end

@@ -6,11 +6,18 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @product.variants.build # master variant
+    option_type = @product.option_types.build
+    2.times { option_type.option_values.build }
   end
   
   def create
     @product = Product.new(params[:product])
-    @product.save    
+    
+    # TODO: move to model
+    option_type = @product.option_types.first
+    @product.master.option_values << option_type.option_values
+    
+    @product.save
     redirect_to products_path
   end
   
