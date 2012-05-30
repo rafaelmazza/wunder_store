@@ -29,6 +29,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @product.update_attributes(params[:product])
     redirect_to products_path
+    # render :text => params[:product]
   end
   
   def show

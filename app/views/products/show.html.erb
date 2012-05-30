@@ -1,1 +1,11 @@
-<%= @product.name %>
+<p><%= @product.name %></p>
+<p>R$ <%= @product.price %></p>
+
+<% @product.option_types.each do |ot| %>
+  <ul>
+    <%= ot.name %> (<%= ot.id %>)
+    <% ot.option_values.each do |ov| %>
+      <li><%= ov.name %> (<%= ov.id %>)</li>
+    <% end %>
+  </ul>
+<% end %>

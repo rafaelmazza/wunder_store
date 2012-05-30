@@ -37,4 +37,9 @@ describe "Products request" do
     current_path.should == product_path(product)
     page.should have_content(product.name)
   end
+  
+  it "show a product with option type" do
+    product = create(:product_with_option_type)
+    p product.option_types.first.option_values.inspect
+  end
 end

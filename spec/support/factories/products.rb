@@ -6,4 +6,9 @@ FactoryGirl.define do
     description "Amazing product with lot of features"
     price 19.99
   end
+  
+  factory :product_with_option_type, :parent => :product do
+    # after_create { |product| create(:option_type, :product_ids => [product.id])}
+    option_types { [FactoryGirl.create(:option_type)] }
+  end
 end
