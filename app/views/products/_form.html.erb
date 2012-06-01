@@ -11,7 +11,7 @@ function add_fields(link, association, content) {
 }
 </script>
 
-<%= form_for @product do |f| %>
+<%= form_for @product, :html => {:multipart => true} do |f| %>
 	<p>
 		<%= f.label :name %>
 		<%= f.text_field :name %>
@@ -29,6 +29,11 @@ function add_fields(link, association, content) {
 
   <% end %>
   -->
+  
+  <!--p><input id="image_attachment" type="file" name="product[variant_attributes][image]"/></p-->
+  <%= f.fields_for :master  do |ff| %>
+    <%= ff.file_field :image, :id => 'image_attachment' %>
+  <% end %>
   
   <p><%= link_to_add_fields "Add Option Type", f, :option_types %></p>
   

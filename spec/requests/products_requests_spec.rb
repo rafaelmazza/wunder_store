@@ -37,4 +37,22 @@ describe "Products request" do
     current_path.should == product_path(product)
     page.should have_content(product.name)
   end
+  
+  context "uploading a product image" do
+    it "uploads a product image" do
+      visit products_path
+      click_on "New Product"      
+      fill_in "Name", :with => "Keyboard"
+      fill_in "Description", :with => "A great keyboard."
+      fill_in "Price", :with => 19.99
+      
+      absolute_path = File.expand_path(Rails.root.join('spec', 'support', 'assets', 'keyboard.jpg'))
+      attach_file("image_attachment", absolute_path)
+      
+      click_on "Save"
+      current_path.should == products_path
+      # page.should have_xpath("//img[@src=\"/products/keyboard.jpg\"]")
+      page.should have_xpath("//img[@src=\"/uploads/variant/image/\"]")
+    end
+  end
 end

@@ -11,6 +11,8 @@ end
 gem 'jquery-rails'
 gem 'mongoid', '~> 2.4'
 gem 'bson_ext', '~> 1.5'
+# gem 'carrierwave'
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 
 group :development do
 end

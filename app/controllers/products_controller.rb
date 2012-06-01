@@ -22,8 +22,8 @@ class ProductsController < ApplicationController
     #   p variant.inspect
     # end
     
-    # redirect_to products_path
-    render :text =>  params[:product]
+    redirect_to products_path
+    # render :text =>  params[:product]
   end
   
   def edit
