@@ -24,6 +24,8 @@ class Product
   after_initialize :ensure_master
   after_save :save_master
   
+  after_save :build_variants
+  
   def ensure_master
     self.master ||= Variant.new if new_record?
   end
@@ -31,4 +33,14 @@ class Product
   def save_master
     master.save if master && (master.changed? || master.new_record?)
   end
+  
+  private
+  
+    def build_variants
+      option_types.each do |option_type|
+        option_type.option_values.each do |ov|
+          variants.create({:option_value_ids => [ov.id], :price => master.price}, :without_protection => true)
+        end        
+      end
+    end
 end

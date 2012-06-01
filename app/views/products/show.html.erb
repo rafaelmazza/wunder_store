@@ -1,6 +1,11 @@
 <p><%= @product.name %></p>
 <p>R$ <%= @product.price %></p>
 
+<% @product.variants.each do |variant| %>
+  <p><%= variant.options_text %></p>
+<% end %>
+
+<!--
 <% @product.option_types.each do |ot| %>
   <ul>
     <%= ot.name %> (<%= ot.id %>)
@@ -9,3 +14,4 @@
     <% end %>
   </ul>
 <% end %>
+-->

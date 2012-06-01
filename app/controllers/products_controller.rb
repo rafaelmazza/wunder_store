@@ -14,11 +14,16 @@ class ProductsController < ApplicationController
     @product = Product.new(params[:product])
     
     # TODO: move to model
-    option_type = @product.option_types.first
-    @product.master.option_values << option_type.option_values
-    
+    # option_type = @product.option_types.first
+    # # @product.master.option_values << option_type.option_values    
     @product.save
-    redirect_to products_path
+    # option_type.option_values.each do |ov|
+    #   variant = @product.variants.create({ :option_value_ids => [ov.id], :price => @product.master.price }, :without_protection => true)
+    #   p variant.inspect
+    # end
+    
+    # redirect_to products_path
+    render :text =>  params[:product]
   end
   
   def edit

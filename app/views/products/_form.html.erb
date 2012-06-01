@@ -1,3 +1,16 @@
+<script type="text/javascript" charset="utf-8">
+function remove_fields(link) {
+  $(link).prev("input[type=hidden]").val("1");
+  $(link).closest(".fields").hide();
+}
+
+function add_fields(link, association, content) {
+  var new_id = new Date().getTime();
+  var regexp = new RegExp("new_" + association, "g")
+  $(link).parent().before(content.replace(regexp, new_id));
+}
+</script>
+
 <%= form_for @product do |f| %>
 	<p>
 		<%= f.label :name %>
@@ -11,9 +24,34 @@
 		<%= f.label :price %>
 		<%= f.text_field :price %>
 	</p>
+	<!--
   <%= f.fields_for :option_types do |ot_form| %>
-    <%= render 'option_types/form', :f => ot_form %>
+
   <% end %>
+  -->
+  
+  <p><%= link_to_add_fields "Add Option Type", f, :option_types %></p>
+  
+  <!--
+  <h2>Variants</h2>
+
+  <ul class="product-prototype-options">
+    <% @product.option_types.each do |ot| %>
+      <li class="option-type-field">
+        <b>
+          <%= text_field_tag "option_types[]", nil, :id => "option_type_#{ot.id}", :class => "option-type" %>
+        </b>      
+        <ul class="option-type-values">
+        <% ot.option_values.each do |ov| %>
+          <li>
+            <%= text_field_tag "product[option_values_hash[#{ot.id}]][]", nil, :id => "option_value_#{ov.id}", :class => "option-value" %>
+          </li>
+        <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+  -->
   
   <!--
   <fieldset>

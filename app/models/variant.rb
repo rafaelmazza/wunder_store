@@ -7,4 +7,20 @@ class Variant
   
   # embedded_in :product
   belongs_to :product
+  
+  def options_text
+    values = self.option_values
+
+    # values = 
+    # values.map! do |ov|
+    #   "#{ov.option_type.name}: #{ov.name}"
+    #   # p "#{ov.option_type.name}: #{ov.name}"
+    # end
+    
+    values = values.map! { |ov| "#{ov.option_type.name}: #{ov.name}" }    
+    
+    # p values.to_sentence({:words_connector => ", ", :two_words_connector => ", "})
+    # p values
+    values.to_sentence({:words_connector => ", ", :two_words_connector => ", "})
+  end
 end

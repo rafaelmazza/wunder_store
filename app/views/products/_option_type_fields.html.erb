@@ -1,0 +1,12 @@
+<div class="fields">
+  <p>
+    <%= f.label "Option Type Name" %>
+    <%= f.text_field :name %>
+    <%= link_to_remove_fields "remove", f %>
+  </p>
+  <p><%= link_to_add_fields "Add Option Value", f, :option_values %></p>
+
+  <%= f.fields_for :option_values do |ov_form| %>
+    <%= render 'option_values_fields', :f => ov_form %>
+  <% end %>
+</div>
