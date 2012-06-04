@@ -7,10 +7,6 @@ describe "Products request" do
     fill_in "Name", :with => "Keyboard"
     fill_in "Description", :with => "A great keyboard."
     fill_in "Price", :with => 19.99
-    # fill_in "product[variants][][name]", :with => "Color"
-    # fill_in "product[variants][][values]", :with => "Black, Blue, Red"
-    # fill_in "product_variant1_name", :with => "Color"
-    # fill_in "product_variant1_values", :with => "Black, White, Red"
     click_on "Save"
     current_path.should == products_path
     page.should have_content("Keyboard")
@@ -38,6 +34,14 @@ describe "Products request" do
     page.should have_content(product.name)
   end
   
+  it "deletes a product" do
+    product = create(:product)
+    visit products_path
+    click_on "Delete"
+    current_path.should == products_path
+    page.should_not have_content(product.name)
+  end
+  
   context "uploading a product image" do
     it "uploads a product image" do
       visit products_path
@@ -52,7 +56,8 @@ describe "Products request" do
       click_on "Save"
       current_path.should == products_path
       # page.should have_xpath("//img[@src=\"/products/keyboard.jpg\"]")
-      page.should have_xpath("//img[@src=\"/uploads/variant/image/\"]")
+      # page.should have_xpath("//img[@src=\"/uploads/variant/image/\"]")
+      page.should have_xpath("//img[contains(@src, \"keyboard.jpg\")]")
     end
   end
 end
