@@ -55,8 +55,6 @@ describe "Products request" do
       
       click_on "Save"
       current_path.should == products_path
-      # page.should have_xpath("//img[@src=\"/products/keyboard.jpg\"]")
-      # page.should have_xpath("//img[@src=\"/uploads/variant/image/\"]")
       page.should have_xpath("//img[contains(@src, \"keyboard.jpg\")]")
     end
   end

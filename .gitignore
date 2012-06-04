@@ -12,3 +12,4 @@
 .rvmrc
 chromedriver.log
 public/uploads/
+public/test_uploads/

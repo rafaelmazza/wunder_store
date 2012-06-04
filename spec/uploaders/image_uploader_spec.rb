@@ -7,8 +7,10 @@ describe ImageUploader do
     ImageUploader.enable_processing = true
     @variant = Variant.new
     @uploader = ImageUploader.new(@variant, :image)
-    absolute_path = File.expand_path(Rails.root.join('spec', 'support', 'assets', 'keyboard.jpg'))
-    @uploader.store!(File.open(absolute_path)) 
+    # absolute_path = File.expand_path(Rails.root.join('spec', 'support', 'assets', 'keyboard.jpg'))
+    # @uploader.store!(File.open(absolute_path))
+    image_path = "#{Rails.root}/spec/support/assets/keyboard.jpg"
+    @uploader.store!(File.open(image_path))
   end
   
   after do
