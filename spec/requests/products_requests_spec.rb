@@ -42,7 +42,13 @@ describe "Products request" do
     page.should_not have_content(product.name)
   end
   
-  context "uploading a product image" do
+  it "display product images when editing" do
+    product = create(:product_with_image)
+    visit edit_product_path(product)
+    page.should have_xpath("//img[contains(@src, \"keyboard.jpg\")]")
+  end
+  
+  context "uploading product images" do
     it "uploads a product image" do
       visit products_path
       click_on "New Product"      

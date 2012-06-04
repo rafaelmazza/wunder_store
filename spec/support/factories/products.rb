@@ -1,4 +1,16 @@
 FactoryGirl.define do
+  factory :variant do
+    price 20
+    # product { |p| p.association(:product) }
+    # option_values { [create(:option_value)] }
+  end
+  
+  factory :variant_with_image, :parent => :variant do
+    image { File.open(File.join(Rails.root, 'spec', 'support', 'assets', 'keyboard.jpg')) }
+  end
+end
+
+FactoryGirl.define do
   sequence(:name) { |n| "Product #{n}" }
 
   factory :product do
@@ -11,5 +23,9 @@ FactoryGirl.define do
   factory :product_with_option_type, :parent => :product do
     # after_create { |product| create(:option_type, :product_ids => [product.id])}
     option_types { [FactoryGirl.create(:option_type)] }
+  end
+  
+  factory :product_with_image, :parent => :product do
+    master FactoryGirl.build(:variant_with_image)
   end
 end

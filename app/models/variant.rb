@@ -1,5 +1,3 @@
-# require 'carrierwave/mongoid'
-
 class Variant
   include Mongoid::Document
   

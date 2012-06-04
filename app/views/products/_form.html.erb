@@ -35,6 +35,8 @@ function add_fields(link, association, content) {
     <%= ff.file_field :image, :id => 'image_attachment' %>
   <% end %>
   
+  <p><%= image_tag @product.master.image_url(:thumb) if @product.master.image? %></p>
+  
   <p><%= link_to_add_fields "Add Option Type", f, :option_types %></p>
   
   <!--
