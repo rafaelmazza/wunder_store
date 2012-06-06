@@ -5,6 +5,10 @@
   <p><%= variant.options_text %></p>
 <% end %>
 
+<% @product.master.images.each do |image| %>
+  <%= image_tag(image.attachment.url(:thumb)) %>
+<% end %>
+
 <!--
 <% @product.option_types.each do |ot| %>
   <ul>

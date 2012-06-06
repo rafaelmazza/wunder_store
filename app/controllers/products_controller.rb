@@ -5,9 +5,9 @@ class ProductsController < ApplicationController
   
   def new
     @product = Product.new
-    variant = @product.variants.build
+    # variant = @product.variants.build
     # 1.times {@product.images.build}
-    1.times {@product.master.images.build}
+    # 1.times {@product.master.images.build}
     
     # variant.images.build
     # 2.times { @product.master.images.build }

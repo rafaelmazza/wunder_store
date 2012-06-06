@@ -12,7 +12,7 @@ class Product
   # embeds_many :option_types
   
   # embeds_one :master, :class_name => 'Variant'
-  has_one :master, :class_name => 'Variant' #, :autosave => true
+  has_one :master, :class_name => 'Variant', :autosave => true
   delegate_belongs_to :master, :price
   # delegate_belongs_to :master, :images
   
