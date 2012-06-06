@@ -3,7 +3,7 @@
 <ul>
 <% @products.each do |product| %>
 	<li class="product">
-	  <%= image_tag product.master.image_url(:thumb) if product.master.image? %>
+	  <% #= image_tag product.master.image_url(:thumb) if product.master.image? %>
 		<%= product.name %>
 		<ul>
 			<li><%= link_to t(:edit), edit_product_path(product) %></li>

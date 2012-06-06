@@ -30,12 +30,44 @@ function add_fields(link, association, content) {
   <% end %>
   -->
   
-  <!--p><input id="image_attachment" type="file" name="product[variant_attributes][image]"/></p-->
-  <%= f.fields_for :master  do |ff| %>
-    <%= ff.file_field :image, :id => 'image_attachment' %>
+  <!--
+  <% @product.variants.each do |variant| %>
+    <ul>
+    <% variant.images.each do |image| %>
+      <li><%= image_tag image.attachment_url(:thumb) if image.attachment? %></li>
+    <% end %>
+    </ul>
+  <% end %>
+  -->
+  <!--
+  <%= f.fields_for :images do |image_form| %>
+    <%= image_form.file_field :attachment %>
+  <% end %>
+  -->
+
+  <%= f.fields_for :master do |master_form| %>
+    <%= master_form.fields_for :images do |image_form| %>
+      <%= image_form.file_field :attachment %>
+    <% end %>
   <% end %>
   
-  <p><%= image_tag @product.master.image_url(:thumb) if @product.master.image? %></p>
+  <%= image_tag @product.master.images.first.attachment_url(:thumb) if  @product.master.images.first.attachment? %>
+  
+  <!--p><input id="image_attachment" type="file" name="product[variant_attributes][image]"/></p-->
+
+  <!--
+  <%= f.fields_for :variants  do |ff| %>
+    <% # = ff.file_field :image, :id => 'image_attachment' %>
+    <%= ff.fields_for :images do |image_form| %>
+      <% if image_form.object.new_record? %>
+        <%= image_form.file_field :attachment %>
+      <% else %>
+        <%= image_tag(image_form.object.attachment.url(:thumb)) %>
+      <% end %>
+    <% end %>
+      <p><%= link_to_add_fields "Add Image", ff, :images %></p>    
+  <% end %>
+  -->
   
   <p><%= link_to_add_fields "Add Option Type", f, :option_types %></p>
   

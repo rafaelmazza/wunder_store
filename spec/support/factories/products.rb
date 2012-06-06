@@ -6,7 +6,8 @@ FactoryGirl.define do
   end
   
   factory :variant_with_image, :parent => :variant do
-    image { File.open(File.join(Rails.root, 'spec', 'support', 'assets', 'keyboard.jpg')) }
+    # image { File.open(File.join(Rails.root, 'spec', 'support', 'assets', 'keyboard.jpg')) }
+    images [FactoryGirl.build(:image)]
   end
 end
 

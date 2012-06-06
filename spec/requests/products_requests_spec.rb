@@ -49,6 +49,7 @@ describe "Products request" do
   end
   
   context "uploading product images" do
+    # it "uploads a product image", :js => true do
     it "uploads a product image" do
       visit products_path
       click_on "New Product"      
@@ -56,8 +57,13 @@ describe "Products request" do
       fill_in "Description", :with => "A great keyboard."
       fill_in "Price", :with => 19.99
       
+      click_on "Add Image"
+      # sleep(2)
+      # wait_until { page.should have_content("Attachment") }
+      # page.find("Add Image").should be_true
       absolute_path = File.expand_path(Rails.root.join('spec', 'support', 'assets', 'keyboard.jpg'))
-      attach_file("image_attachment", absolute_path)
+      # attach_file("image_attachment", absolute_path)
+      attach_file("Attachment", absolute_path)
       
       click_on "Save"
       current_path.should == products_path

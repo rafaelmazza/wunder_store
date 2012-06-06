@@ -12,12 +12,15 @@ class Product
   # embeds_many :option_types
   
   # embeds_one :master, :class_name => 'Variant'
-  has_one :master, :class_name => 'Variant'
+  has_one :master, :class_name => 'Variant' #, :autosave => true
   delegate_belongs_to :master, :price
+  # delegate_belongs_to :master, :images
   
   # embeds_many :variants
-  has_many :variants
+  has_many :variants, :autosave => true
   
+  # accepts_nested_attributes_for :images
+  accepts_nested_attributes_for :master
   accepts_nested_attributes_for :variants #, :allow_destroy => true
   accepts_nested_attributes_for :option_types
   

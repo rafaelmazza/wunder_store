@@ -5,7 +5,9 @@ class Variant
   
   has_and_belongs_to_many :option_values
   
-  mount_uploader :image, ImageUploader
+  # mount_uploader :image, ImageUploader
+  has_many :images, :autosave => true
+  accepts_nested_attributes_for :images
   
   # embedded_in :product
   belongs_to :product

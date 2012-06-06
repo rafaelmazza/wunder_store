@@ -5,9 +5,15 @@ class ProductsController < ApplicationController
   
   def new
     @product = Product.new
-    @product.variants.build # master variant
-    option_type = @product.option_types.build
-    2.times { option_type.option_values.build }
+    variant = @product.variants.build
+    # 1.times {@product.images.build}
+    1.times {@product.master.images.build}
+    
+    # variant.images.build
+    # 2.times { @product.master.images.build }
+    # @product.variants.build # master variant
+    # option_type = @product.option_types.build
+    # 2.times { option_type.option_values.build }
   end
   
   def create
@@ -28,6 +34,7 @@ class ProductsController < ApplicationController
   
   def edit
     @product = Product.find(params[:id])
+    # 2.times {@product.master.images.build}
   end
   
   def update
