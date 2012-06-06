@@ -19,7 +19,6 @@ class Product
   # embeds_many :variants
   has_many :variants, :autosave => true
   
-  # accepts_nested_attributes_for :images
   accepts_nested_attributes_for :master
   accepts_nested_attributes_for :variants #, :allow_destroy => true
   accepts_nested_attributes_for :option_types
@@ -42,7 +41,7 @@ class Product
     def build_variants
       option_types.each do |option_type|
         option_type.option_values.each do |ov|
-          variants.create({:option_value_ids => [ov.id], :price => master.price}, :without_protection => true)
+          variants.create({:option_value_ids => [ov.id], :price => master.price}, :without_protection => true) unless variants.map(&:option_value_ids).flatten.include?(ov.id)
         end        
       end
     end

@@ -24,26 +24,6 @@ function add_fields(link, association, content) {
 		<%= f.label :price %>
 		<%= f.text_field :price %>
 	</p>
-	<!--
-  <%= f.fields_for :option_types do |ot_form| %>
-
-  <% end %>
-  -->
-  
-  <!--
-  <% @product.variants.each do |variant| %>
-    <ul>
-    <% variant.images.each do |image| %>
-      <li><%= image_tag image.attachment_url(:thumb) if image.attachment? %></li>
-    <% end %>
-    </ul>
-  <% end %>
-  -->
-  <!--
-  <%= f.fields_for :images do |image_form| %>
-    <%= image_form.file_field :attachment %>
-  <% end %>
-  -->
 
   <%= f.fields_for :master do |master_form| %>
     <%= master_form.fields_for :images do |image_form| %>
@@ -56,57 +36,16 @@ function add_fields(link, association, content) {
     <p><%= link_to_add_fields "Add Image", master_form, :images %></p>
   <% end %>
   
-  
-  <!--p><input id="image_attachment" type="file" name="product[variant_attributes][image]"/></p-->
-
-  <!--
-  <%= f.fields_for :variants  do |ff| %>
-    <% # = ff.file_field :image, :id => 'image_attachment' %>
-    <%= ff.fields_for :images do |image_form| %>
-      <% if image_form.object.new_record? %>
-        <%= image_form.file_field :attachment %>
-      <% else %>
-        <%= image_tag(image_form.object.attachment.url(:thumb)) %>
+  <%= f.fields_for :option_types do |of| %>
+    <%= of.text_field :name %>
+    <ul>
+      <%= of.fields_for :option_values do |ov| %>
+        <li><%= ov.text_field :name %></li>
       <% end %>
-    <% end %>
-      <p><%= link_to_add_fields "Add Image", ff, :images %></p>    
+    </ul>
   <% end %>
-  -->
-  
+    
   <p><%= link_to_add_fields "Add Option Type", f, :option_types %></p>
-  
-  <!--
-  <h2>Variants</h2>
-
-  <ul class="product-prototype-options">
-    <% @product.option_types.each do |ot| %>
-      <li class="option-type-field">
-        <b>
-          <%= text_field_tag "option_types[]", nil, :id => "option_type_#{ot.id}", :class => "option-type" %>
-        </b>      
-        <ul class="option-type-values">
-        <% ot.option_values.each do |ov| %>
-          <li>
-            <%= text_field_tag "product[option_values_hash[#{ot.id}]][]", nil, :id => "option_value_#{ov.id}", :class => "option-value" %>
-          </li>
-        <% end %>
-        </ul>
-      </li>
-    <% end %>
-  </ul>
-  -->
-  
-  <!--
-  <fieldset>
-	  <h2>Variants</h2>
-	  <%= f.fields_for :variants do |variants_form| %>
-      <p>
-        <%= variants_form.label :price %>
-        <%= variants_form.text_field :price %>
-      </p>
-    <% end %>   
-	</fieldset>
-  -->
   
 	<p>
 		<%= f.submit 'Save' %>

@@ -46,6 +46,7 @@ class ProductsController < ApplicationController
   
   def show
     @product = Product.find(params[:id])
+    # render :text => OptionType.find(params[:id]).name
   end
   
   def destroy
