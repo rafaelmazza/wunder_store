@@ -2,6 +2,8 @@ class Variant
   include Mongoid::Document
   
   field :price
+  field :count_on_hand, type: Integer
+  field :is_master, type: Boolean, default: false
   
   has_and_belongs_to_many :option_values
   
@@ -11,6 +13,14 @@ class Variant
   
   # embedded_in :product
   belongs_to :product
+  
+  def on_hand=(quantity)
+    self.count_on_hand = quantity
+  end
+  
+  def on_hand
+    count_on_hand
+  end
   
   def options_text
     values = self.option_values

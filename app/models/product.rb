@@ -17,7 +17,7 @@ class Product
   # delegate_belongs_to :master, :images
   
   # embeds_many :variants
-  has_many :variants, :autosave => true
+  has_many :variants_including_master, :autosave => true, :class_name => 'Variant'
   
   accepts_nested_attributes_for :master
   accepts_nested_attributes_for :variants #, :allow_destroy => true
@@ -28,12 +28,24 @@ class Product
   
   after_save :build_variants
   
+  def variants
+    variants_including_master.where(is_master: false)
+  end
+  
   def ensure_master
     self.master ||= Variant.new if new_record?
+    self.master.is_master = true
   end
   
   def save_master
     master.save if master && (master.changed? || master.new_record?)
+  end
+  
+  def on_hand
+    # variants.exists? ? variants.sum(:count_on_hand) : master.on_hand
+    variants.exists? ? variants.inject(0) { |sum, v| sum + v.on_hand } : master.on_hand
+    # variants.exists? ? variants[0].on_hand + variants[1].on_hand : master.on_hand
+    # master.on_hand
   end
   
   private

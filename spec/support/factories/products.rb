@@ -1,8 +1,9 @@
 FactoryGirl.define do
   factory :variant do
-    price 20
+    # price 20
     # product { |p| p.association(:product) }
     # option_values { [create(:option_value)] }
+    product
   end
   
   factory :variant_with_image, :parent => :variant do
@@ -19,6 +20,11 @@ FactoryGirl.define do
     name
     description "Amazing product with lot of features"
     price 19.99
+  end
+  
+  factory :product_with_variants, :parent => :product do |p|
+    # associations :variants, []
+    # variants [FactoryGirl.create(:variant), FactoryGirl.create(:variant)]
   end
   
   factory :product_with_option_type, :parent => :product do
