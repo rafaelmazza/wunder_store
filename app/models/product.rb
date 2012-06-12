@@ -26,7 +26,10 @@ class Product
   after_initialize :ensure_master
   after_save :save_master
   
-  after_save :build_variants
+  # after_save :build_variants
+  after_create :build_variants_from_option_values_hash, :if => :option_values_hash
+  
+  attr_accessor :option_values_hash
   
   def variants
     variants_including_master.where(is_master: false)
@@ -46,7 +49,24 @@ class Product
   end
   
   private
-  
+    def ensure_option_types_exist_for_values_hash
+      return if option_values_hash.nil?
+      option_values_hash.keys.each do |id|
+        self.option_type_ids << id unless option_type_ids.include?(id)
+      end
+    end
+    
+    def build_variants_from_option_values_hash
+      ensure_option_types_exist_for_values_hash
+      values = option_values_hash.values
+      values = values.inject(values.shift) { |memo, value| memo.product(value).map(&:flatten) }
+
+      values.each do |ids|
+        variant = variants.create({:option_value_ids => ids, :price => master.price})
+      end
+      save
+    end
+    
     def build_variants
       option_types.each do |option_type|
         option_type.option_values.each do |ov|
