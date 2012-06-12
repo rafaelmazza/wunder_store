@@ -42,10 +42,7 @@ class Product
   end
   
   def on_hand
-    # variants.exists? ? variants.sum(:count_on_hand) : master.on_hand
     variants.exists? ? variants.inject(0) { |sum, v| sum + v.on_hand } : master.on_hand
-    # variants.exists? ? variants[0].on_hand + variants[1].on_hand : master.on_hand
-    # master.on_hand
   end
   
   private

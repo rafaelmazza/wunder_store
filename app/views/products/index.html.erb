@@ -3,8 +3,8 @@
 <ul>
 <% @products.each do |product| %>
 	<li class="product">
-	  <% #= image_tag product.master.image_url(:thumb) if product.master.image? %>
-		<%= product.name %>
+	  <p><%= product.name %></p>
+	  <%= image_tag product.master.images.first.attachment_url(:thumb) if product.master.images.first && product.master.images.first.attachment? %>
 		<ul>
 			<li><%= link_to t(:edit), edit_product_path(product) %></li>
 			<li><%= link_to t(:view), product_path(product) %></li>

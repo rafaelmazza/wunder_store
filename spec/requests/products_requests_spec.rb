@@ -48,26 +48,22 @@ describe "Products request" do
     page.should have_xpath("//img[contains(@src, \"keyboard.jpg\")]")
   end
   
-  # context "uploading product images" do
-  #   # it "uploads a product image", :js => true do
-  #   it "uploads a product image" do
-  #     visit products_path
-  #     click_on "New Product"      
-  #     fill_in "Name", :with => "Keyboard"
-  #     fill_in "Description", :with => "A great keyboard."
-  #     fill_in "Price", :with => 19.99
-  #     
-  #     click_on "Add Image"
-  #     # sleep(2)
-  #     # wait_until { page.should have_content("Attachment") }
-  #     # page.find("Add Image").should be_true
-  #     absolute_path = File.expand_path(Rails.root.join('spec', 'support', 'assets', 'keyboard.jpg'))
-  #     # attach_file("image_attachment", absolute_path)
-  #     attach_file("Attachment", absolute_path)
-  #     
-  #     click_on "Save"
-  #     current_path.should == products_path
-  #     page.should have_xpath("//img[contains(@src, \"keyboard.jpg\")]")
-  #   end
-  # end
+  context "uploading product images" do
+    it "uploads a product image", :js => true do
+      visit products_path
+      click_on "New Product"      
+      fill_in "Name", :with => "Keyboard"
+      fill_in "Description", :with => "A great keyboard."
+      fill_in "Price", :with => 19.99
+      
+      click_on "Add Image"
+      absolute_path = File.expand_path(Rails.root.join('spec', 'support', 'assets', 'keyboard.jpg'))
+      attachment_id = page.find(".attachment input")[:id]
+      attach_file(attachment_id, absolute_path)
+      
+      click_on "Save"
+      current_path.should == products_path
+      page.should have_xpath("//img[contains(@src, \"keyboard.jpg\")]")
+    end
+  end
 end

@@ -1,26 +1,30 @@
 require 'spec_helper'
 
 describe Product do
-  context 'scope' do
-    context '#variants_including_master' do
-      let(:product) { create(:product) }
-
-      it "includes master" do
-        product.variants_including_master.should include(product.master)
-      end
-    end
-
-    context '#variants' do
-      let(:product) { create(:product) }
-
-      it "does not include master variant" do
-        product.variants.should_not include(product.master)
-      end
-    end
+  let(:product) { create(:product) }
+  
+  it 'creates master after initialize' do
+    product.master.should_not be_nil
   end
   
+  context '#variants_including_master' do
+    # let(:product) { create(:product) }
+
+    it "includes master" do
+      product.variants_including_master.should include(product.master)
+    end
+  end
+
+  context '#variants' do
+    # let(:product) { create(:product) }
+
+    it "does not include master variant" do
+      product.variants.should_not include(product.master)
+    end
+  end
+
   context '#on_hand' do
-    let(:product) { create(:product) }
+    # let(:product) { create(:product) }
     
     context 'with no variants' do
       before do
