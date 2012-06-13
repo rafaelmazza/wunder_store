@@ -37,19 +37,27 @@ describe Product do
       hash
     end
     
-    it 'creates option types, values and variants from option values hash with multiple option types' do
-      # p option_values_hash
+    let(:option_values_hash) do
       hash = {}
-      option_values_hash.each do |name, values|
-        ot = build_option_type_with_values(name, values)
-        hash[ot.id.to_s] = ot.option_values.map(&:id)
-      end
-      # p OptionType.all.length
-      # p hash
-      product.option_values_hash = hash
-      product.save
-      product.option_type_ids.length.should == 2
-      product.variants.length.should == 9      
+      hash[:color] = [[name: 'black', count_on_hand: 10], [name: 'blue', count_on_hand: 5]]
+      hash[:size] = [[name: 'P', count_on_hand: 5], [name: 'M', count_on_hand: 5], [name: 'G', count_on_hand: 5]]
+      hash
+    end    
+    
+    it 'creates option types, values and variants from option values hash with multiple option types' do
+      # p option_values_hash[:color]
+      # # p option_values_hash
+      # hash = {}
+      # option_values_hash.each do |name, values|
+      #   ot = build_option_type_with_values(name, values)
+      #   hash[ot.id.to_s] = ot.option_values.map(&:id)
+      # end
+      # # p OptionType.all.length
+      # # p hash
+      # product.option_values_hash = hash
+      # product.save
+      # product.option_type_ids.length.should == 2
+      # product.variants.length.should == 9      
     end
   end
   
