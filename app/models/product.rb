@@ -3,6 +3,8 @@ require 'wunder_store' # TODO: change require location
 class Product
   include Mongoid::Document
   
+  belongs_to :user
+  
   field :name
   field :description
   # field :price, type: Integer

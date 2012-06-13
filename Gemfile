@@ -24,4 +24,5 @@ group :test do
 	gem 'database_cleaner', '~> 0.7.2'
 	gem 'factory_girl_rails', '~> 3.1.0'
 	gem 'guard-rspec'
+	gem 'mongoid-rspec'
 end

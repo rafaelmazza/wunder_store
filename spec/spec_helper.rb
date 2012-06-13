@@ -41,6 +41,15 @@ RSpec.configure do |config|
   end
   
   config.include FactoryGirl::Syntax::Methods
+  config.include Mongoid::Matchers
+  # config.include RequestMacros, :type => :request
+  config.include UserHelper, :type => :request
+  
+  # warden
+  # include Devise::TestHelpers
+  # include Warden::Test::Helpers # gives us the login_as(@user) method when request object is not present
+  # Warden.test_mode!
+  config.after(:each) { Warden.test_reset! }
   
   I18n.default_locale = :en
 end
