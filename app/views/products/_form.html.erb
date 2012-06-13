@@ -24,7 +24,21 @@ function add_fields(link, association, content) {
 		<%= f.label :price %>
 		<%= f.text_field :price %>
 	</p>
-
+	  
+  <!--
+  <p>
+    <%= text_field_tag "product[option_values_hash][][name]" %>
+  </p>
+  <p>
+    <%= text_field_tag "product[option_values_hash][][values][][name]" %>
+    <%= text_field_tag "product[option_values_hash][][values][][count_on_hand]" %>    
+  </p>
+  <p>
+    <%= text_field_tag "product[option_values_hash][][values][][name]" %>
+    <%= text_field_tag "product[option_values_hash][][values][][count_on_hand]" %>    
+  </p>
+  -->
+  
   <%= f.fields_for :master do |master_form| %>
     <%= master_form.fields_for :images do |image_form| %>
       <% if image_form.object.new_record? %>
@@ -36,6 +50,7 @@ function add_fields(link, association, content) {
     <p><%= link_to_add_fields "Add Image", master_form, :images %></p>
   <% end %>
   
+  <!--
   <%= f.fields_for :option_types do |of| %>
     <%= of.text_field :name %>
     <ul>
@@ -46,6 +61,7 @@ function add_fields(link, association, content) {
   <% end %>
     
   <p><%= link_to_add_fields "Add Option Type", f, :option_types %></p>
+  -->
   
 	<p>
 		<%= f.submit 'Save' %>
