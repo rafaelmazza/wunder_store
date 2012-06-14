@@ -5,7 +5,7 @@ describe "User products requests" do
     as(:user)
   end
   
-  it "creates a product", current: true do
+  it "creates a product" do
     product = build(:product)
     visit products_path
     click_on "New Product"      

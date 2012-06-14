@@ -42,8 +42,8 @@ RSpec.configure do |config|
   
   config.include FactoryGirl::Syntax::Methods
   config.include Mongoid::Matchers
-  # config.include RequestMacros, :type => :request
   config.include UserHelper, :type => :request
+  config.include UserHelper, :type => :controller
   
   # warden
   # include Devise::TestHelpers
