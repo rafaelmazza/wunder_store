@@ -14,6 +14,7 @@ gem 'bson_ext', '~> 1.5'
 gem 'rmagick'
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'devise', '~> 2.1'
+gem 'cancan'
 
 group :development do
 end
