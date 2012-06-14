@@ -2,11 +2,18 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    can :show, :products
+    can :show, Product
     
     if user
-      can :create, :products
+      can :index, :products
+      can :create, Product
+      can :destroy, Product
+      can :update, Product, user: user
     end
+    
+    # p 'aqui'
+    # p user.inspect
+    # can :manage, :all
     
     # Define abilities for the passed in user here. For example:
     #

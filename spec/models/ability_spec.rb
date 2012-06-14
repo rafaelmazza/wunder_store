@@ -8,7 +8,7 @@ describe Ability do
     end
     
     it 'can view a product' do
-      @ability.should be_able_to(:show, :products)
+      @ability.should be_able_to(:show, Product)
     end
   end
   
@@ -18,8 +18,11 @@ describe Ability do
       @ability = Ability.new(@user)
     end
     
-    it 'create a product' do
-      @ability.should be_able_to(:create, :products)
+    it 'can create, view, list and update a product' do
+      @ability.should be_able_to(:create, Product)
+      @ability.should be_able_to(:show, Product)
+      @ability.should be_able_to(:index, :products)
+      @ability.should be_able_to(:destroy, Product)
     end
   end
 end

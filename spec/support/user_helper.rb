@@ -6,11 +6,11 @@ module UserHelper
   Warden.test_mode!
 
   def as(resource=nil, &block)
-    current_resource = create(resource.to_sym)
+    @current_user = create(resource.to_sym)
     if request.present?
-      sign_in(current_resource)
+      sign_in(@current_user)
     else
-      login_as(current_resource, :scope => resource)
+      login_as(@current_user, :scope => resource)
     end
     block.call if block.present?
     return self

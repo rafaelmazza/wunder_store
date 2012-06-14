@@ -53,6 +53,16 @@ describe "User products requests" do
     page.should have_xpath("//img[contains(@src, \"keyboard.jpg\")]")
   end
   
+  context 'edit product', edit: true do
+    let(:product) { create(:product, user: create(:user)) }
+      
+    it 'can only edit his own products' do
+      expect {
+        visit edit_product_path(product)
+      }.to raise_exception(CanCan::AccessDenied)
+    end
+  end
+  
   context "uploading product images" do
     it "uploads a product image", :js => true do
       visit products_path
