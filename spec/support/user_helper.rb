@@ -13,7 +13,8 @@ module UserHelper
       login_as(@current_user, :scope => resource)
     end
     block.call if block.present?
-    return self
+    # return self
+    return @current_user
   end
   
   def as_guest(resource=nil, &block)

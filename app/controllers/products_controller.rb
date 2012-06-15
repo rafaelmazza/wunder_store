@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @products = Product.all
+    @products = current_user.products
   end
   
   def new
@@ -11,21 +11,19 @@ class ProductsController < ApplicationController
   end
   
   def create
-    @product = Product.new(params[:product])
+    @product = current_user.products.new(params[:product])
     @product.save
     redirect_to products_path
-    # render :text =>  params
   end
   
   def edit
-    @product = Product.find(params[:id])
+    @product = current_user.products.find(params[:id])
   end
   
   def update
-    @product = Product.find(params[:id])
+    @product = current_user.products.find(params[:id])
     @product.update_attributes(params[:product])
     redirect_to products_path
-    # render :text => params[:product]
   end
   
   def show
@@ -33,7 +31,7 @@ class ProductsController < ApplicationController
   end
   
   def destroy
-    @product = Product.find(params[:id])
+    @product = current_user.products.find(params[:id])
     @product.destroy
     redirect_to products_path
   end

@@ -5,10 +5,11 @@ class Ability
     can :show, Product
     
     if user
-      can :index, :products
+      can :index, Product
       can :create, Product
-      can :destroy, Product
+      can :destroy, Product, user: user
       can :update, Product, user: user
+      # can :manage, :all
     end
     
     # p 'aqui'

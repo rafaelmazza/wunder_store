@@ -21,7 +21,7 @@ describe Ability do
     it 'can create, view, list and update a product' do
       @ability.should be_able_to(:create, Product)
       @ability.should be_able_to(:show, Product)
-      @ability.should be_able_to(:index, :products)
+      @ability.should be_able_to(:index, Product)
       @ability.should be_able_to(:destroy, Product)
     end
   end

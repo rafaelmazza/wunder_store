@@ -5,6 +5,19 @@ describe "User products requests" do
     as(:user)
   end
   
+  context 'list products' do
+    it 'list only current user products' do
+      another_user = create(:user)
+      product_1 = create(:product, user: @current_user)
+      product_2 = create(:product, user: another_user)
+      product_3 = create(:product, user: another_user)
+      visit products_path
+      page.should have_content(product_1.name)
+      page.should_not have_content(product_2.name)
+      page.should_not have_content(product_3.name)
+    end
+  end
+  
   it "creates a product" do
     product = build(:product)
     visit products_path
@@ -18,7 +31,7 @@ describe "User products requests" do
   end
   
   it "edit a product" do
-    product = create(:product)
+    product = create(:product, user: @current_user)
     visit products_path
     # within "ul li.product ul li" do
       click_on "Edit"
@@ -32,7 +45,7 @@ describe "User products requests" do
   end
   
   it "show a product" do
-    product = create(:product)
+    product = create(:product, user: @current_user)
     visit products_path
     click_on "View"
     current_path.should == product_path(product)
@@ -40,7 +53,7 @@ describe "User products requests" do
   end
   
   it "deletes a product" do
-    product = create(:product)
+    product = create(:product, user: @current_user)
     visit products_path
     click_on "Delete"
     current_path.should == products_path
@@ -48,7 +61,7 @@ describe "User products requests" do
   end
   
   it "display product images when editing" do
-    product = create(:product_with_image)
+    product = create(:product_with_image, user: @current_user)
     visit edit_product_path(product)
     page.should have_xpath("//img[contains(@src, \"keyboard.jpg\")]")
   end
