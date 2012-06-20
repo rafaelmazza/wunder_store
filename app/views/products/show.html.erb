@@ -9,6 +9,12 @@
   <%= image_tag(image.attachment.url(:thumb)) %>
 <% end %>
 
+<%= form_for @order do |f| %>
+  <%= f.label :quantity %>
+  <%= f.text_field :quantity %>
+  <%= f.submit 'Buy' %>
+<% end %>
+
 <!--
 <% @product.option_types.each do |ot| %>
   <ul>

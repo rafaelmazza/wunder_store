@@ -28,6 +28,8 @@ class ProductsController < ApplicationController
   
   def show
     @product = Product.find(params[:id])
+        
+    @order = @product.user.orders.build
   end
   
   def destroy
