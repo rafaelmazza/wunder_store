@@ -2,22 +2,17 @@ require 'spec_helper'
 
 describe 'Guest orders requests' do
   let(:user) { create(:user) }
-  let(:product) { create(:product, user: user) }
-  # let(:order) { create(:order) }
-  
-  # before do
-  #   # product.stub_chain(:user, :orders, :build).and_return(order)
-  # end
+  let(:product) { create(:product, :price => 100, user: user) }
 
   it 'create an order' do
     visit product_path(product)
-    # p page.body
     fill_in :quantity, with: 1
     click_on 'Buy'
     
-    # current_path.should == edit_order_path(order)
     order = Order.last
     current_path.should == edit_order_path(order)
+    
+    find('.order-price').should have_content(100)
     
     fill_in :email, with: 'rafael@cafeazul.com.br'
     fill_in :first_name, with: 'Rafael'
