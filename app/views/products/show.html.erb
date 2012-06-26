@@ -10,8 +10,7 @@
 <% end %>
 
 <%= form_for @order do |f| %>
-  <%= f.label :quantity %>
-  <%= f.text_field :quantity %>
+  <%= text_field_tag "variants[#{@product.master.id}]", 1, :id => 'quantity' %>
   <%= f.submit 'Buy' %>
 <% end %>
 
