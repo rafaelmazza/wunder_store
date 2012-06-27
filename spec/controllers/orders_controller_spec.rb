@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'active_merchant/billing/gateways/paypal/paypal_express_response'
 
 describe OrdersController do
   describe 'POST #create' do
@@ -32,6 +33,25 @@ describe OrdersController do
     it 'assigns recently created order to edit action' do
       get :edit, id: order
       assigns(:order).should == order
+    end
+  end
+  
+  describe 'GET #checkout' do
+    let(:paypal_redirect_url) { "banana" }
+    let(:response) { mock(ActiveMerchant::Billing::PaypalExpressResponse, token: "stub_token") }
+    
+    before(:each) do
+      PAYPAL_EXPRESS_GATEWAY.stub!(:setup_purchase).and_return(response)
+      PAYPAL_EXPRESS_GATEWAY.stub!(:redirect_url_for).and_return(paypal_redirect_url)
+    end
+    
+    it 'get' do
+      PAYPAL_EXPRESS_GATEWAY.should_receive(:setup_purchase).with(123456, {
+        ip: request.remote_ip,
+        return_url: products_url,
+        cancel_return_url: products_url
+      }).and_return(response)
+      get :checkout
     end
   end
 end

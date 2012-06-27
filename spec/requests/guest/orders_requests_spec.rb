@@ -22,5 +22,7 @@ describe 'Guest orders requests' do
     fill_in 'Zipcode', with: '04077-020'
     fill_in 'Phone', with: '55 11 5052-7001'
     select 'Brazil', from: 'Country'
+    
+    click_on 'Checkout'
   end
 end

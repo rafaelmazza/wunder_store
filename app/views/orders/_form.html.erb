@@ -14,4 +14,7 @@
   <%= f.fields_for :address do |address_builder| %>
     <%= render 'address_fields', f: address_builder %>
   <% end %>
+  
+  <% # = f.submit 'Checkout', type: :image, src: 'https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif' %>
+  <%= link_to image_tag('https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif'), checkout_order_path, :id => 'Checkout' %>
 <% end %>
