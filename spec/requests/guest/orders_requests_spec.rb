@@ -9,20 +9,18 @@ describe 'Guest orders requests' do
     fill_in 'quantity', with: 2
     click_on 'Buy'
     
-    # order = Order.first
-    # p order.line_items.inspect
-    # p order.inspect
-    # current_path.should == edit_order_path(order)
+    order = Order.first
+    current_path.should == edit_order_path(order)
     find('.order-price').should have_content(200)
     
-    fill_in 'email', with: 'rafael@cafeazul.com.br'
-    fill_in 'first_name', with: 'Rafael'
-    fill_in 'last_name', with: 'Mazza'
-    fill_in 'address', with: 'Av. Moema 170, conjunto 65'
-    fill_in 'city', with: 'Sao Paulo'
-    fill_in 'state', with: 'Sao Paulo'
-    fill_in 'zipcode', with: '04077-020'
-    fill_in 'phone', with: '55 11 5052-7001'
-    # select 'Brazil', from: 'country'
+    fill_in 'Email', with: 'rafael@cafeazul.com.br'
+    fill_in 'First name', with: 'Rafael'
+    fill_in 'Last name', with: 'Mazza'
+    fill_in 'Address', with: 'Av. Moema 170, conjunto 65'
+    fill_in 'City', with: 'Sao Paulo'
+    fill_in 'State', with: 'Sao Paulo'
+    fill_in 'Zipcode', with: '04077-020'
+    fill_in 'Phone', with: '55 11 5052-7001'
+    select 'Brazil', from: 'Country'
   end
 end

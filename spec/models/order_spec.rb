@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe Order do
   it { should belong_to :user }
-  # it { should have_field(:quantity).of_type(Integer) }
+  it { should have_field(:email).of_type(String) }
+  it { should have_field(:first_name).of_type(String) }
+  it { should have_field(:last_name).of_type(String) }
   it { should embed_one :address }
   it { should have_many :line_items }
   
