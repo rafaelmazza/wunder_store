@@ -82,4 +82,16 @@ describe OrdersController do
       end
     end
   end
+  
+  describe 'GET #index' do
+    let(:current_user) { as(:user) }    
+    let!(:orders) { [create(:order, user: current_user), create(:order, user: current_user)] }
+    let(:other_user_order) { create(:order, user: create(:user)) }
+    
+    it 'assigns current user orders' do
+      get :index
+      assigns(:orders).should == orders
+      assigns(:orders).should_not include(other_user_order)
+    end
+  end
 end
