@@ -17,20 +17,23 @@ class OrdersController < ApplicationController
   end
   
   def checkout
-    # @order = Order.find(params[:id])
-    # render text: @order.inspect
-    response = PAYPAL_EXPRESS_GATEWAY.setup_purchase(220, # order total in cents
+    @order = Order.find(params[:id])
+    # render text: @order.total * 100
+    response = PAYPAL_EXPRESS_GATEWAY.setup_purchase(@order.total * 100, # order total in cents
       ip: request.remote_ip,
-      items: [{:name => "Tickets", :quantity => 22, :description => "Tickets for 232323", :amount => 10}],
-      return_url: callback_order_url,
-      cancel_return_url: products_url
+      description: 'Wunder Store',
+      # items: [{:name => "Tickets", :quantity => 22, :description => "Tickets for 232323", :amount => 10}],
+      return_url: complete_order_url(@order),
+      cancel_return_url: request.env['HTTP_REFERER']
     )
     # render text: response.inspect
     redirect_to PAYPAL_EXPRESS_GATEWAY.redirect_url_for(response.token)
   end
   
-  def callback
-    details = PAYPAL_EXPRESS_GATEWAY.details_for(params[:token])
-    render text: details.params.inspect
+  def complete
+    @order = Order.find(params[:id])
+    @order.fill_with_paypal_details(params[:token])
+    # render text: @order.first_name.inspect
+    # render text: details.params.inspect
   end
 end

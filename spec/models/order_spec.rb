@@ -37,4 +37,27 @@ describe Order do
       order.find_line_item_by_variant(product.master).quantity.should == 2
     end
   end
+  
+  describe '#fill_with_paypal_details=' do
+    let(:order) { Order.new }
+
+    before do
+      PAYPAL_EXPRESS_GATEWAY.stub(:details_for).and_return(details)
+    end
+    
+    # let(:details) { {params: {first_name: 'Rafael', last_name: 'Mazza'}} }  
+    let(:details) { stub params: {'first_name' => 'Rafael', 'last_name' => 'Mazza'} }
+    
+    it 'sets paypal express token' do
+      order.fill_with_paypal_details('token')
+      order.token.should == 'token'
+    end
+    
+    it 'fills order details fetched from paypal' do
+      order.fill_with_paypal_details('token')
+      order.first_name.should == 'Rafael'
+      order.last_name.should == 'Mazza'
+    end
+    
+  end
 end

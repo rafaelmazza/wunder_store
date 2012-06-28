@@ -4,6 +4,7 @@ class Order
   field :email, type: String
   field :first_name, type: String
   field :last_name, type: String
+  field :token, type: String
   
   belongs_to :user
 
@@ -30,5 +31,12 @@ class Order
   
   def find_line_item_by_variant(variant)
     line_items.detect { |line_item| line_item.variant_id == variant.id }
+  end
+  
+  def fill_with_paypal_details(token)
+    self.token = token
+    paypal_details = PAYPAL_EXPRESS_GATEWAY.details_for(token)
+    self.first_name = paypal_details.params['first_name']
+    self.last_name = paypal_details.params['last_name']
   end
 end
