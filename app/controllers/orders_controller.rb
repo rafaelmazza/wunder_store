@@ -39,5 +39,6 @@ class OrdersController < ApplicationController
   def complete
     @order = Order.find(params[:id])
     @order.fill_with_paypal_details(params[:token])
+    @order.save # TODO: refactor
   end
 end

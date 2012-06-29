@@ -39,7 +39,8 @@ describe 'Guest orders requests' do
     click_on 'Checkout'
     current_path.should == complete_order_path(order)
     page.should have_content('Order completed')
-    page.should have_content('Rafael')
-    page.should have_content('Mazza')
+    find('.total').should have_content(order.total)
+    find('.first-name').should have_content(order.first_name)
+    find('.last-name').should have_content(order.last_name)
   end
 end

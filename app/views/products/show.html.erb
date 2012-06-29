@@ -1,5 +1,5 @@
-<p><%= @product.name %></p>
-<p>R$ <%= @product.price %></p>
+<p><label>Product</label> <strong><%= @product.name %></strong></p>
+<p><label>Price</label> <strong>R$ <%= @product.price %></strong></p>
 
 <% @product.variants.each do |variant| %>
   <p><%= variant.options_text %></p>
@@ -10,6 +10,9 @@
 <% end %>
 
 <%= form_for @order do |f| %>
+  <%= f.hidden_field :user_id, value: @product.user.id %>
+  
+  <%= label_tag :quantity %>
   <%= text_field_tag "variants[#{@product.master.id}]", 1, :id => 'quantity' %>
   <%= f.submit 'Buy' %>
 <% end %>

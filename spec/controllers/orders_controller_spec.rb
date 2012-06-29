@@ -3,10 +3,17 @@ require 'active_merchant/billing/gateways/paypal/paypal_express_response'
 
 describe OrdersController do
   describe 'POST #create' do
+    let(:user) { create(:user) }
+    
     it 'redirects to edit order path' do
       post :create
       order = Order.last
       response.should redirect_to(edit_order_path(order))
+    end
+    
+    it 'associates to user', current: true do
+      post :create, order: { user_id: user }
+      assigns(:order).user.should == user
     end
     
     context 'with variants' do

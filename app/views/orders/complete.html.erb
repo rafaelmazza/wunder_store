@@ -1,3 +1,14 @@
 <h1>Order completed</h1>
-<p><strong>First name</strong> <%= @order.first_name %></p>
-<p><strong>Last name</strong> <%= @order.last_name %></p>
+<br/>
+<p>
+  <label>Total</label>
+  <strong class="total"><%= @order.total %></strong>
+</p>
+<p>
+  <label>First Name</label>
+  <strong class="first-name"><%= @order.first_name %></strong>
+</p>
+<p>
+  <label>Last Name</label>
+  <strong class="last-name"><%= @order.last_name %></strong>
+</p>

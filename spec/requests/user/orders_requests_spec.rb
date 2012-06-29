@@ -23,7 +23,10 @@ describe 'User orders requests' do
       visit orders_path
       click_on current_user_order.id.to_s
       current_path.should == order_path(current_user_order)
-      page.should have_content(current_user_order.id)
+      find('.id').should have_content(current_user_order.id)
+      find('.total').should have_content(current_user_order.total)
+      find('.first-name').should have_content(current_user_order.first_name)
+      find('.last-name').should have_content(current_user_order.last_name)
     end
   end
 end
