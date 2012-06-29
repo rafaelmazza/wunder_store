@@ -3,7 +3,7 @@ WunderStore::Application.routes.draw do
 
   root :to => 'home#index'
   resources :products
-  resources :orders, only: [:create, :edit, :index] do
+  resources :orders, only: [:create, :edit, :index, :show] do
     get 'checkout', :on => :member
     get 'complete', :on => :member
   end

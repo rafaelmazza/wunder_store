@@ -94,4 +94,21 @@ describe OrdersController do
       assigns(:orders).should_not include(other_user_order)
     end
   end
+  
+  describe 'GET #show' do
+    let!(:current_user) { as(:user) }
+    let(:order) { create(:order, user: current_user) }
+    let(:other_user_order) { create(:order, user: create(:user)) }    
+    
+    it 'assigns order' do
+      get :show, id: order
+      assigns(:order).should_not be_nil
+    end
+    
+    it 'view only current user order' do
+      expect {
+        get :show, id: other_user_order
+      }.to raise_error(Mongoid::Errors::DocumentNotFound)
+    end
+  end
 end

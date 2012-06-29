@@ -1,5 +1,5 @@
 <ul>
   <% @orders.each do |order| %>
-  <li><%= order.id %></li>
+  <li><%= link_to order.id.to_s, order_path(order) %></li>
   <% end %>
 </ul>

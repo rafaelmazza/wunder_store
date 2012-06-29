@@ -17,4 +17,13 @@ describe 'User orders requests' do
       page.should_not have_content(another_user_order.id)
     end
   end
+  
+  context 'view order details' do
+    it 'display order details' do
+      visit orders_path
+      click_on current_user_order.id.to_s
+      current_path.should == order_path(current_user_order)
+      page.should have_content(current_user_order.id)
+    end
+  end
 end

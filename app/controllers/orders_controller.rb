@@ -1,6 +1,5 @@
 class OrdersController < ApplicationController
   def index
-    # @orders = Order.all
     @orders = current_user.orders.all
   end
   
@@ -15,6 +14,10 @@ class OrdersController < ApplicationController
     
     @order.save
     redirect_to edit_order_path(@order)
+  end
+  
+  def show
+    @order = current_user.orders.find(params[:id])
   end
   
   def edit
