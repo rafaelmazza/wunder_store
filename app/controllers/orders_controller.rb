@@ -38,7 +38,8 @@ class OrdersController < ApplicationController
   
   def complete
     @order = Order.find(params[:id])
-    @order.fill_with_paypal_details(params[:token])
-    @order.save # TODO: refactor
+    render text: PAYPAL_EXPRESS_GATEWAY.purchase(@order.total * 100, {token: params[:token], payer_id: params[:PayerID]}).inspect
+    # @order.fill_with_paypal_details(params[:token])
+    # @order.save # TODO: refactor
   end
 end
