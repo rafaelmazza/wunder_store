@@ -1,0 +1,8 @@
+<h1><%= t("confirm") %></h1>
+<p>
+  <%= raw t("order_not_yet_placed") %>
+</p>
+
+<div>
+  <%= button_to t('place_order'), complete_order_url(@order, {:token => params[:token] , :PayerID => params[:PayerID]} ) %>
+</div>

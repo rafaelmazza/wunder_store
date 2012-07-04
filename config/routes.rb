@@ -5,7 +5,8 @@ WunderStore::Application.routes.draw do
   resources :products
   resources :orders, only: [:create, :edit, :index, :show] do
     get 'checkout', :on => :member
-    get 'complete', :on => :member
+    get 'confirm', :on => :member
+    post 'complete', :on => :member
   end
   
   # The priority is based upon order of creation:

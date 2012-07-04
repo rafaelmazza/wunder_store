@@ -6,8 +6,8 @@ describe 'Guest orders requests' do
   let(:product) { create(:product, :price => 100, user: user) }
   
   let(:paypal_redirect_url) { "/stub_redirect_url" }
-  let(:response) { mock(ActiveMerchant::Billing::PaypalExpressResponse, token: "stub_token") }
-  let(:details) { stub params: {'first_name' => 'Rafael', 'last_name' => 'Mazza'} }
+  let(:response) { mock(ActiveMerchant::Billing::PaypalExpressResponse, success?: true, token: "stub_token") }
+  let(:details) { stub success?: true, params: {'first_name' => 'Rafael', 'last_name' => 'Mazza'} }
   
   before(:each) do
     PAYPAL_EXPRESS_GATEWAY.stub!(:setup_purchase).and_return(response)

@@ -46,23 +46,25 @@ describe OrdersController do
   context 'paypal express checkout', current: true do
     let(:order) { create(:order, line_items: [create(:line_item, price: 100, quantity: 2)]) }
     let(:paypal_redirect_url) { "stub_redirect_url" }
-    let(:response) { mock(ActiveMerchant::Billing::PaypalExpressResponse, token: "stub_token") }
-    let(:details) { stub params: {'first_name' => 'Rafael', 'last_name' => 'Mazza'} }
+    let(:response) { mock(ActiveMerchant::Billing::PaypalExpressResponse, token: "stub_token", success?: true) }
+    let(:details) { stub success?: true, params: {'first_name' => 'Rafael', 'last_name' => 'Mazza'} }
 
     before do
       PAYPAL_EXPRESS_GATEWAY.stub!(:setup_purchase).and_return(response)
       PAYPAL_EXPRESS_GATEWAY.stub!(:redirect_url_for).and_return(paypal_redirect_url)
       PAYPAL_EXPRESS_GATEWAY.stub(:details_for).and_return(details)
+      PAYPAL_EXPRESS_GATEWAY.stub(:purchase).and_return(mock(success?: true, params: {'first_name' => 'Rafael', 'last_name' => 'Mazza'}))
     end
     
     describe 'GET #checkout' do
       it 'setup paypal purchase' do
-        PAYPAL_EXPRESS_GATEWAY.should_receive(:setup_purchase).with(order.total * 100, {
-          description: 'Wunder Store',
-          # items: [{:name => "Tickets", :quantity => 22, :description => "Tickets for 232323", :amount => 10}],
-          ip: request.remote_ip,
-          return_url: complete_order_url(order),
-          cancel_return_url: request.env['HTTP_REFERER']
+        PAYPAL_EXPRESS_GATEWAY.should_receive(:setup_purchase).with((order.total * 100).to_i, {
+          money: (order.total * 100).to_i,
+          items: [{:name=>"Product 3", :description=>"Amazing product with lot of features", :quantity=>2, :amount=>10000}],
+          order_id: order.id.to_s,
+          custom: order.id.to_s,
+          return_url: confirm_order_url(order),
+          cancel_return_url: edit_order_url(order)
         }).and_return(response)
         get :checkout, id: order
       end
@@ -78,10 +80,10 @@ describe OrdersController do
       end
     end
 
-    describe 'GET #complete' do
+    describe 'GET #confirm' do
       it 'sets paypal user details' do
         # order.should_receive('fill_with_paypal_details').with('stub_token')
-        get :complete, id: order, token: 'stub_token'
+        get :confirm, id: order, token: 'stub_token'
         order = assigns(:order)
         order.token.should == 'stub_token'
         order.first_name.should == 'Rafael'
