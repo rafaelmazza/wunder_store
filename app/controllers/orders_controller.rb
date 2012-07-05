@@ -68,8 +68,9 @@ class OrdersController < ApplicationController
     response = PAYPAL_EXPRESS_GATEWAY.purchase((@order.total * 100).to_i, options)
 
     if response.success?
-      # implement states machine
-      @order.payments.create(amount: response.params['gross_amount'])
+      payment = @order.payments.create(amount: response.params['gross_amount'])
+      payment.complete!
+      redirect_to order_path(@order)
     else
       paypal_error(response)
       redirect_to edit_order_url(@order)

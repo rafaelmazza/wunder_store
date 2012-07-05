@@ -92,6 +92,7 @@ describe OrdersController do
     end
     
     describe 'POST #complete', current: true do
+      # let!(:order) { create(:order, line_items: [create(:line_item, price: 100, quantity: 2)], payments: [create(:payment)]) }
       let!(:order) { create(:order, line_items: [create(:line_item, price: 100, quantity: 2)]) }
       
       context 'on success' do
@@ -99,14 +100,24 @@ describe OrdersController do
         
         before do
           PAYPAL_EXPRESS_GATEWAY.stub(:purchase).and_return(response)
+          # Order.stub find: order
         end
 
         it 'does the purchase and creates a payment' do
+          # p 'payments'
+          # p order.payments.inspect
           Order.stub find: order
           PAYPAL_EXPRESS_GATEWAY.should_receive(:purchase).with((order.total * 100).to_i, {token: 'token', payer_id: 'payer_id'})
           order.payments.should_receive(:create).with(amount: response.params['gross_amount'])
           post :complete, id: order, token: 'token', PayerID: 'payer_id'
-        end        
+          p order.payments.inspect
+        end
+        
+        it 'changes payment state to completed' do
+          post :complete, id: order, token: 'token', PayerID: 'payer_id'
+          payment = Payment.last
+          payment.state.should == 'completed'
+        end
       end
     end
   end

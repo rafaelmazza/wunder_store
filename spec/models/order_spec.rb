@@ -8,7 +8,7 @@ describe Order do
   it { should embed_one :address }
   it { should have_many :line_items }
   it { should have_many :payments }
-  
+
   describe '#total' do
     let(:order) { Order.new(line_items: [create(:line_item, quantity: 1, variant: create(:variant, price: 50)), create(:line_item, quantity: 2, variant: create(:variant, price: 50))]) }
     

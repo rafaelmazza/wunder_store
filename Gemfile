@@ -16,6 +16,7 @@ gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'devise', '~> 2.1'
 gem 'cancan'
 gem 'activemerchant'
+gem 'state_machine'
 
 group :development do
 end
