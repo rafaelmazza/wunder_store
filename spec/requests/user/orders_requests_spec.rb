@@ -29,4 +29,12 @@ describe 'User orders requests' do
       find('.last-name').should have_content(current_user_order.last_name)
     end
   end
+  
+  context 'requesting money transfer', current: true do
+    it 'transfer order money' do
+      visit order_path(current_user_order)
+      click_on 'Transfer Money'
+      page.should have_content('The money was successfully transfered')
+    end
+  end
 end

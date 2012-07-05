@@ -3,6 +3,7 @@ class Payment
   
   field :amount, type: Integer
   
+  has_many :transfers
   belongs_to :order
   
   state_machine initial: 'checkout' do
