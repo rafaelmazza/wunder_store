@@ -11,7 +11,7 @@ describe OrdersController do
       response.should redirect_to(edit_order_path(order))
     end
     
-    it 'associates to user', current: true do
+    it 'associates to user' do
       post :create, order: { user_id: user }
       assigns(:order).user.should == user
     end
@@ -43,7 +43,7 @@ describe OrdersController do
     end
   end
   
-  context 'paypal express checkout', current: true do
+  context 'paypal express checkout' do
     let(:order) { create(:order, line_items: [create(:line_item, price: 100, quantity: 2)]) }
     let(:paypal_redirect_url) { "stub_redirect_url" }
     let(:response) { mock(ActiveMerchant::Billing::PaypalExpressResponse, token: "stub_token", success?: true) }
@@ -53,7 +53,7 @@ describe OrdersController do
       PAYPAL_EXPRESS_GATEWAY.stub!(:setup_purchase).and_return(response)
       PAYPAL_EXPRESS_GATEWAY.stub!(:redirect_url_for).and_return(paypal_redirect_url)
       PAYPAL_EXPRESS_GATEWAY.stub(:details_for).and_return(details)
-      PAYPAL_EXPRESS_GATEWAY.stub(:purchase).and_return(mock(success?: true, params: {'first_name' => 'Rafael', 'last_name' => 'Mazza'}))
+      # PAYPAL_EXPRESS_GATEWAY.stub(:purchase).and_return(mock(success?: true, params: {'first_name' => 'Rafael', 'last_name' => 'Mazza'}))
     end
     
     describe 'GET #checkout' do
@@ -88,6 +88,25 @@ describe OrdersController do
         order.token.should == 'stub_token'
         order.first_name.should == 'Rafael'
         order.last_name.should == 'Mazza'
+      end
+    end
+    
+    describe 'POST #complete', current: true do
+      let!(:order) { create(:order, line_items: [create(:line_item, price: 100, quantity: 2)]) }
+      
+      context 'on success' do
+        let(:response) { mock(success?: true, params: {'gross_amount' => (order.total * 100).to_i}) }
+        
+        before do
+          PAYPAL_EXPRESS_GATEWAY.stub(:purchase).and_return(response)
+        end
+
+        it 'does the purchase and creates a payment' do
+          Order.stub find: order
+          PAYPAL_EXPRESS_GATEWAY.should_receive(:purchase).with((order.total * 100).to_i, {token: 'token', payer_id: 'payer_id'})
+          order.payments.should_receive(:create).with(amount: response.params['gross_amount'])
+          post :complete, id: order, token: 'token', PayerID: 'payer_id'
+        end        
       end
     end
   end

@@ -65,16 +65,15 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     options = {token: params[:token], payer_id: params[:PayerID]}
     
-    response = PAYPAL_EXPRESS_GATEWAY.purchase(options[:money], options)
+    response = PAYPAL_EXPRESS_GATEWAY.purchase((@order.total * 100).to_i, options)
 
     if response.success?
       # implement states machine
+      @order.payments.create(amount: response.params['gross_amount'])
     else
       paypal_error(response)
       redirect_to edit_order_url(@order)
     end
-    
-    render text: PAYPAL_EXPRESS_GATEWAY.purchase(@order.total * 100, options).inspect
   end
   
   private

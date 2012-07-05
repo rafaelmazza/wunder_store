@@ -10,6 +10,7 @@ class Order
 
   embeds_one :address
   has_many :line_items, autosave: true
+  has_many :payments, dependent: :destroy
   
   def total
     line_items.map(&:total).sum
