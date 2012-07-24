@@ -1,5 +1,5 @@
 class TransfersController < ApplicationController
-  respond_to :json
+  respond_to :html, :json
   
   def index
     @payment = Payment.find(params[:payment_id])
@@ -8,8 +8,7 @@ class TransfersController < ApplicationController
   
   def create
     @payment = Payment.find(params[:payment_id])
-    # @transfer = @payment.transfers.create
-    Transfer.process(@payment)
+    @transfer = @payment.transfer
     respond_with @transfer
   end
 end

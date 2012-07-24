@@ -1,22 +1,17 @@
 class PaymentsController < ApplicationController
+  respond_to :html, :json
+  
   def index
-    @order = Order.find(params[:order_id])
+    # @order = Order.find(params[:order_id])
+    @order = current_user.orders.find(params[:order_id])
     @payments = @order.payments
   end
   
   def transfer
     @payment = Payment.find(params[:id])
-    @transfer = @payment.transfers.create
-        
-    response = PAYPAL_EXPRESS_GATEWAY.transfer([(@payment.amount * 100), current_user.paypal_id])
-    # response = PAYPAL_EXPRESS_GATEWAY.transfer([(@payment.amount * 100), 'john'])
-    if response.success?
-      @transfer.complete!
-    else
-      @transfer.failed!
-    end
     
-    # render nothing: true
-    render text: response.inspect
+    transfer = @payment.transfer
+
+    respond_with transfer
   end
 end

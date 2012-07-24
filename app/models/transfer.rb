@@ -16,11 +16,7 @@ class Transfer
     end
     
     event :complete do
-      transition from: ['pending', 'failed'], to: 'complete'
+      transition from: ['pending', 'failed'], to: 'completed'
     end
-  end
-  
-  def self.process(payment)
-    response = PAYPAL_EXPRESS_GATEWAY.transfer([payment.amount, 'email'])
   end
 end

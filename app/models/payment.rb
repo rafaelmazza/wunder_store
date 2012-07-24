@@ -27,4 +27,21 @@ class Payment
       transition from: ['completed', 'pending', 'checkout'], to: 'canceled'
     end
   end
+  
+  def transferred?
+    transfers.any? { |t| t.completed? }
+  end
+
+  def transfer
+    unless transferred?
+      @transfer = transfers.create
+      response = PAYPAL_EXPRESS_GATEWAY.transfer((amount * 100), order.user.paypal_id)
+      if response.success?
+        @transfer.complete!
+      else
+        @transfer.failed!
+      end
+      @transfer      
+    end
+  end
 end

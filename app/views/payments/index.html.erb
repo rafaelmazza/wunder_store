@@ -1,5 +1,11 @@
 <ul>
   <% @payments.each do |payment| %>
-  <li><%= payment.id %>: <%= payment.state %> <%= link_to 'Transfer', transfer_order_payment_path(@order, payment) %></li>
+  <li>
+    <%= payment.id %>: <%= payment.state %> 
+    <% #= link_to 'Transfer', transfer_order_payment_path(@order, payment) %>
+    <%= form_tag payment_transfers_path(payment) do %>
+      <%= submit_tag 'Transfer' %>
+    <% end %>
+  </li>
   <% end %>
 </ul>

@@ -16,6 +16,7 @@ WunderStore::Application.routes.draw do
   resources :payments do
     resources :transfers
   end
+  resources :transfers
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
