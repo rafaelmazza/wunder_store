@@ -5,4 +5,6 @@ describe User do
   
   it { should have_many :products }
   it { should have_many :orders}
+  
+  it { should have_field(:paypal_id).of_type(String) }
 end

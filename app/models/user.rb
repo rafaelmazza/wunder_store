@@ -1,6 +1,8 @@
 class User
   include Mongoid::Document
   
+  field :paypal_id, type: String
+  
   has_many :products
   has_many :orders
   

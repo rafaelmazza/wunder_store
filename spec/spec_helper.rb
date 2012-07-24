@@ -41,7 +41,7 @@ RSpec.configure do |config|
   end
   
   config.include FactoryGirl::Syntax::Methods
-  config.include Mongoid::Matchers
+  config.include Mongoid::Matchers, :type => :model
   config.include UserHelper, :type => :request
   config.include UserHelper, :type => :controller
   

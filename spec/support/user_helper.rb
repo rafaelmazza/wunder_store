@@ -4,6 +4,20 @@ module UserHelper
   # gives us the login_as(@user) method when request object is not present
   include Warden::Test::Helpers
   Warden.test_mode!
+  
+  def create_logged_in_user
+    user = FactoryGirl.create(:user)
+    login(user)
+    user
+  end
+ 
+  def login(user)
+    if request.present?
+      sign_in(user)
+    else
+      login_as(user, :scope => :user)
+    end
+  end
 
   def as(resource=nil, &block)
     @current_user = create(resource.to_sym)
