@@ -7,10 +7,15 @@ WunderStore::Application.routes.draw do
     get 'checkout', :on => :member
     get 'confirm', :on => :member
     post 'complete', :on => :member
+    
+    resources :payments do
+      get :transfer, :on => :member
+      # resources :transfers
+    end
   end
-  # resources :payments do
-  #   resources :transfers
-  # end
+  resources :payments do
+    resources :transfers
+  end
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
