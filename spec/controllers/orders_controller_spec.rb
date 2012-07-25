@@ -91,17 +91,17 @@ describe OrdersController do
       end
     end
     
-    describe 'POST #complete', current: true do
+    describe 'POST #complete' do
       # let!(:order) { create(:order, line_items: [create(:line_item, price: 100, quantity: 2)], payments: [create(:payment)]) }
       let!(:order) { create(:order, line_items: [create(:line_item, price: 100, quantity: 2)]) }
       
+      before do
+        PAYPAL_EXPRESS_GATEWAY.stub(:purchase).and_return(response)
+        # Order.stub find: order
+      end
+      
       context 'on success' do
         let(:response) { mock(success?: true, params: {'gross_amount' => (order.total * 100).to_i}) }
-        
-        before do
-          PAYPAL_EXPRESS_GATEWAY.stub(:purchase).and_return(response)
-          # Order.stub find: order
-        end
 
         it 'does the purchase and creates a payment' do
           pending
@@ -118,6 +118,17 @@ describe OrdersController do
           post :complete, id: order, token: 'token', PayerID: 'payer_id'
           payment = Payment.last
           payment.state.should == 'completed'
+        end
+      end
+      
+      context 'on failure', current: true do
+        let(:response) { mock(success?: false) }
+        
+        it 'marks payment state as failed' do
+          pending
+          post :complete, id: order, token: 'token', PayerID: 'payer_id'
+          payment = Payment.last
+          payment.state.should == 'failed'          
         end
       end
     end
