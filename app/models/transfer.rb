@@ -18,5 +18,9 @@ class Transfer
     event :complete do
       transition from: ['pending', 'failed'], to: 'completed'
     end
+    
+    after_transition any => 'completed' do |transfer, transition|
+      Resque.enqueue(CompletedTransferNotification)
+    end
   end
 end
