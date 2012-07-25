@@ -1,5 +1,6 @@
 class Payment
   include Mongoid::Document
+  include Mongoid::Timestamps
   
   field :amount, type: Integer
   
@@ -34,6 +35,7 @@ class Payment
 
   def transfer
     unless transferred?
+    # if completed? and not transferred?
       @transfer = transfers.create
       response = PAYPAL_EXPRESS_GATEWAY.transfer((amount * 100), order.user.paypal_id)
       if response.success?

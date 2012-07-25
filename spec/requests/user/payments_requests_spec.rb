@@ -14,7 +14,6 @@ describe 'Payments Requests' do
   it 'transfers payment amount to user paypal account' do
     visit order_payments_path(order)
     click_on 'Transfer'
-    puts page.body
     page.should have_content 'Payment successfully transferred'
   end
 end

@@ -4,5 +4,5 @@
 </p>
 
 <div>
-  <%= button_to t('place_order'), complete_order_url(@order, {:token => params[:token] , :PayerID => params[:PayerID]} ) %>
+  <%= button_to 'Place Order', complete_order_url(@order, {:token => params[:token] , :PayerID => params[:PayerID]} ) %>
 </div>

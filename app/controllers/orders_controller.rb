@@ -70,7 +70,7 @@ class OrdersController < ApplicationController
     if response.success?
       payment = @order.payments.create(amount: response.params['gross_amount'])
       payment.complete!
-      redirect_to order_path(@order)
+      # redirect_to order_path(@order)
     else
       paypal_error(response)
       redirect_to edit_order_url(@order)

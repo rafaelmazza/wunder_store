@@ -14,6 +14,4 @@
   <label>Last Name</label>
   <strong class="last-name"><%= @order.last_name %></strong>
 </p>
-<p>
-  <%= link_to t('transfer_money'), '' %>
-</p>
+<%= link_to 'Payments', order_payments_path(@order) %>

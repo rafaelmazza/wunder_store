@@ -34,11 +34,13 @@ describe 'Guest orders requests' do
     # fill_in 'Phone', with: '55 11 5052-7001'
     # select 'Brazil', from: 'Country'
     
-    PAYPAL_EXPRESS_GATEWAY.stub!(:redirect_url_for).and_return(complete_order_url(order))
-    
+    PAYPAL_EXPRESS_GATEWAY.stub!(:redirect_url_for).and_return(confirm_order_url(order))
+    PAYPAL_EXPRESS_GATEWAY.stub(:purchase).and_return(mock(success?: true, params: {gross_amount: order.total}))
+        
     click_on 'Checkout'
-    current_path.should == complete_order_path(order)
-    page.should have_content('Order completed')
+    current_path.should == confirm_order_path(order)
+    page.should have_content('Order Not Yet Placed')
+    click_on 'Place Order'
     find('.total').should have_content(order.total)
     find('.first-name').should have_content(order.first_name)
     find('.last-name').should have_content(order.last_name)
