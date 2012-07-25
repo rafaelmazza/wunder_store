@@ -17,6 +17,7 @@ gem 'devise', '~> 2.1'
 gem 'cancan'
 gem 'activemerchant'
 gem 'state_machine'
+gem 'resque', :require => 'resque/server'
 
 group :development do
 end

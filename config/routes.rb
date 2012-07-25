@@ -18,6 +18,11 @@ WunderStore::Application.routes.draw do
   end
   resources :transfers
   
+  # mount Resque::Server, :at => '/resque'
+  authenticate :user do
+    mount Resque::Server => "/resque"
+  end
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
