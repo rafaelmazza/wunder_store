@@ -11,7 +11,7 @@ class TransfersController < ApplicationController
     @transfer = @payment.transfers.create
     Resque.enqueue(PaymentTransfer, @transfer.id)
     # @transfer = @payment.transferred
-    # flash[:notice] = 'Payment successfully transferred' if @transfer.completed?
+    flash[:notice] = 'Your payment is being processed.'
     respond_with @transfer
   end
   
