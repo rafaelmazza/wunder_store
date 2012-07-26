@@ -20,7 +20,7 @@ module WunderStore
     
     config.generators do |g|
       g.test_framework :rspec, :fixture => true, :views => false
-      g.fixture_replacement :factory_girl, :dir => 'spec/support/factories'
+      g.fixture_replacement :factory_girl, :dir => 'spec/support'
     end
     
     # Settings in config/environments/* take precedence over those specified here.
