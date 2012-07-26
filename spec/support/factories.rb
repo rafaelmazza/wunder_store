@@ -1,13 +1,13 @@
 FactoryGirl.define do  
   factory :user do
     sequence(:email) {|n| "user#{n}@cafeazul.com.br"}
-    password '123mudar'
-    password_confirmation '123mudar'
-    paypal_id 'paypal_id'
+    password "123mudar"
+    password_confirmation "123mudar"
+    paypal_id "paypal_id"
   end
   
   factory :image do
-    attachment { File.open(File.join(Rails.root, 'spec', 'support', 'assets', 'keyboard.jpg')) }
+    attachment { File.open(File.join(Rails.root, "spec", "support", "assets", "keyboard.jpg")) }
   end
   
   factory :line_item do
@@ -24,8 +24,8 @@ FactoryGirl.define do
   end
   
   factory :order do
-    first_name 'John'
-    last_name 'Doe'
+    first_name "John"
+    last_name "Doe"
     user
   end
   
@@ -33,28 +33,32 @@ FactoryGirl.define do
     amount 10
     order
   end
-  
-  # variants  
+
   factory :variant do
     product
+    
+    factory :variant_with_image, :parent => :variant do
+      images [FactoryGirl.build(:image)]
+    end
+    
+    # factory :variant_with_images do
+    #   ignore do
+    #     images_count 3
+    #   end
+    #   
+    #   after(:create) do |variant, evaluator|
+    #     FactoryGirl.create_list(:image, evaluator.images_count, variant: variant)
+    #   end
+    # end
   end
-  
-  factory :variant_with_image, :parent => :variant do
-    images [FactoryGirl.build(:image)]
-  end
-  
-  # products
+
   factory :product do
     sequence(:name) { |n| "Product #{n}" }
     description "Amazing product with lot of features"
     price 19.99
-  end
-  
-  factory :product_with_option_type, :parent => :product do
-    option_types { [FactoryGirl.create(:option_type)] }
-  end
-  
-  factory :product_with_image, :parent => :product do
-    master FactoryGirl.build(:variant_with_image)
+    
+    factory :product_with_image do
+      master FactoryGirl.build(:variant_with_image)
+    end
   end
 end
