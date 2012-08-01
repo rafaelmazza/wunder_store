@@ -1,2 +1,8 @@
 en:
-  
+  home:
+    index:
+      products: Products
+      orders: Orders
+  products:
+    index:
+      new: New Product
