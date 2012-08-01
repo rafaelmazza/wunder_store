@@ -1,0 +1,8 @@
+pt-BR:
+  home:
+    index:
+      products: Produtos
+      orders: Pedidos
+  products:
+    index:
+      new: Novo Produto

@@ -13,7 +13,7 @@ function add_fields(link, association, content) {
 
 <%= form_for @product, :html => {:multipart => true} do |f| %>
 	<p>
-		<%= f.label :name %>
+		<%= f.label t(:name) %>
 		<%= f.text_field :name %>
 	</p>
 	<p>
