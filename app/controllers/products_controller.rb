@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  respond_to :html, :widget
   before_filter :authenticate_user!, except: [:show]
   load_and_authorize_resource
   
@@ -28,8 +29,8 @@ class ProductsController < ApplicationController
   
   def show
     @product = Product.find(params[:id])
-        
     @order = @product.user.orders.build
+    respond_with @product
   end
   
   def destroy

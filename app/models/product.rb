@@ -7,7 +7,7 @@ class Product
   
   field :name
   field :description
-  # field :price, type: Integer
+  field :theme
   
   has_and_belongs_to_many :option_types, :autosave => true
   # has_many :option_types
