@@ -11,9 +11,12 @@
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
 
-  <% if user_signed_in? %>
-  <%= render 'shared/menu' %>
-  <% end %>
+  <ul>
+    <li><%= link_to t('home'), root_url %></li>
+    <li><%= link_to t('about'), '/about' %></li>
+    <li><%= link_to t('sign_up'), sign_up_url %></li>
+    <li><%= link_to t('login'), login_url %></li>
+  </ul>
 
   <div class="container">
     <%= yield %>

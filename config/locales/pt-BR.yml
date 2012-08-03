@@ -1,8 +1,16 @@
 pt-BR:
-  home:
-    index:
-      products: Produtos
-      orders: Pedidos
-  products:
-    index:
-      new: Novo Produto
+  about: Sobre
+  sign_up: Criar conta
+  login: Login
+  logout: Sair
+  products: Produtos
+  orders: Pedidos
+  new_product: Novo Produto
+    
+  # home:
+  #   index:
+  #     products: Produtos
+  #     orders: Pedidos
+  # products:
+  #   index:
+  #     new: Novo Produto

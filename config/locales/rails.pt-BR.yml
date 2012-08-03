@@ -205,9 +205,12 @@ pt-BR:
   activerecord:
     errors:
       <<: *errors
+
   mongoid:
     errors:
       <<: *errors
     attributes:
       product:
         name: Nome
+        description: Descrição
+        price: Preço
