@@ -1,7 +1,8 @@
 WunderStore::Application.routes.draw do
   devise_for :users
 
-  root :to => 'home#index'
+  root :to => 'pages#home'
+
   resources :products
   resources :orders, only: [:create, :edit, :index, :show] do
     get 'checkout', :on => :member
@@ -22,6 +23,8 @@ WunderStore::Application.routes.draw do
   authenticate :user do
     mount Resque::Server => "/resque"
   end
+  
+  match ':action' => 'pages'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
