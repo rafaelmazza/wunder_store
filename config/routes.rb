@@ -1,5 +1,6 @@
 WunderStore::Application.routes.draw do
-  devise_for :users do
+
+  devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks' } do
     get '/signup' => 'devise/registrations#new', as: 'sign_up'
     get '/login' => 'devise/sessions#new', as: 'login'
     delete '/logout' => 'devise/sessions#destroy', as: 'logout'

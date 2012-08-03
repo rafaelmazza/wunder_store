@@ -18,6 +18,7 @@ gem 'cancan'
 gem 'activemerchant'
 gem 'state_machine'
 gem 'resque', :require => 'resque/server'
+gem 'omniauth-facebook'
 
 group :development do
 end

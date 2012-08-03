@@ -3,6 +3,9 @@ class User
   
   field :paypal_id, type: String
   
+  field :provider, type: String
+  field :uid, type: String
+  
   has_many :products
   has_many :orders
   
@@ -10,7 +13,7 @@ class User
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   ## Database authenticatable
   field :email,              :type => String, :null => false, :default => ""
@@ -43,4 +46,18 @@ class User
 
   ## Token authenticatable
   # field :authentication_token, :type => String
+  
+  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    unless user
+      user = User.create(
+        name: auth.extra.raw_info.name,
+        provider: auth.provider,
+        uid: auth.uid,
+        email: auth.info.email,
+        password: Devise.friendly_token[0,20]
+      )
+    end
+    user
+  end
 end
